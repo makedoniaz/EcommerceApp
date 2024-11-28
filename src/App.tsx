@@ -1,20 +1,13 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import SearchBar from './components/SearchBar';
+import { Root } from './navigation/Root';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { styles } from './styles';
 
 
-function App() {
-  const handleSearch = (text: any) => {
-    console.log('Search text:', text);
-  };
-
+export const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView>
-        <SearchBar placeholder="Search something..." onSearch={handleSearch} />
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider style={styles.container}>
+      <Root />
+    </SafeAreaProvider>
   );
 }
-
-export default App;
