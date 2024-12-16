@@ -6,11 +6,10 @@ import { styles } from './styles';
 import { Meal } from '../../utils/types';
 
 
-
 export const Home = () => {
-
     const [meals, setMeals] = useState<Meal[]>([])
     const insets = useSafeAreaInsets()
+    
     const handleSearch = async (text: string) => {
         try {
             const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`);

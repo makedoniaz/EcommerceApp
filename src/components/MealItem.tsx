@@ -7,6 +7,9 @@ import { convertStringToHashtagArray } from '../utils/helpers'
 import { Colors } from '../utils/colors'
 
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
+import FavoriteButton from './FavoriteButton';
 
 interface Props extends Meal {
 
@@ -14,7 +17,13 @@ interface Props extends Meal {
 
 export const MealItem: React.FC<Props> = (props) => {
     const tags = props.strTags ? convertStringToHashtagArray(props.strTags) : [];
+
+    //@ts-ignore
     const navigation = useNavigation();
+
+    //@ts-ignore
+    const ids = useSelector((state) => state.ids);
+    const isFavorite = ids.includes(props.idMeal);
 
     //@ts-ignore
     const onNavigate = (idMeal) => navigation.navigate('Details', { idMeal })
@@ -23,17 +32,24 @@ export const MealItem: React.FC<Props> = (props) => {
         <TouchableOpacity style={styles.container} onPress={() => onNavigate(props.idMeal)}>
             <Image style={styles.image} source={{ uri: props.strMealThumb }} />
 
-            <View style={styles.textContainer}>
-                <Text style={styles.name}>{props.strMeal}</Text>
-                <View style={styles.tagsContainer}>
-                    {tags.map((tag, index) => (
-                        <Text key={index} style={styles.tag}>
-                            {tag}
-                        </Text>
-                    ))}
+            <View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.name}>{props.strMeal}</Text>
+                    <View style={styles.tagsContainer}>
+                        {tags.map((tag, index) => (
+                            <Text key={index} style={styles.tag}>
+                                {tag}
+                            </Text>
+                        ))}
+                    </View>
+                </View>
+
+                <View>
+                    <FavoriteButton isFavorite={isFavorite} idMeal={props.idMeal}/>
                 </View>
             </View>
         </TouchableOpacity>
+        
     );
 }
 
@@ -53,8 +69,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
 
-        marginTop: 10,
         marginBottom: 5,
+        width: 200,
 
         flexWrap: 'wrap',
         color: Colors.almostBlack

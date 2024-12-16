@@ -9,6 +9,7 @@ import { Meal } from '../../utils/types';
 import { transformToMeal } from '../../utils/helpers';
 import { IngredientsList } from '../../components/IngredientsList';
 import { ScrollView } from 'react-native-gesture-handler';
+import FavoriteButton from '../../components/FavoriteButton';
 
 interface Props {
 
